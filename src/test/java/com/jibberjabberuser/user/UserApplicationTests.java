@@ -1,4 +1,4 @@
-package com.jjingsis.user;
+package com.jibberjabberuser.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -12,3 +12,8 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+
+security:
+  jwt:
+    token:
+      secret-key: ${JWT_SECRET_KEY}

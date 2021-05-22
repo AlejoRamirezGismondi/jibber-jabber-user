@@ -36,4 +36,10 @@ public class UserService {
   public List<User> getAll() {
     return userRepository.findAll();
   }
+  
+  public User get(String email) {
+    final Optional<User> optional = userRepository.findByEmail(email);
+    if (optional.isPresent()) return optional.get();
+    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+  }
 }

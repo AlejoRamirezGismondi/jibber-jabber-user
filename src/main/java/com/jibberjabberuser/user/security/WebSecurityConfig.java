@@ -11,10 +11,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   
   private final JwtTokenProvider jwtTokenProvider;
@@ -34,9 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     // Entry points
     http.authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/user/", "/user/login").permitAll()
+            .antMatchers(HttpMethod.POST, "/user", "/user/login").permitAll()
             // Disallow everything else..
-            .anyRequest().authenticated();
+            .anyRequest().authenticated().and().cors();
     
     // If a user try to access a resource without having enough permissions
     http.exceptionHandling().accessDeniedPage("/login");
@@ -57,5 +62,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
+  }
+
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    final CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(Arrays.asList("*"));
+    configuration.setAllowedMethods(Arrays.asList("*"));
+    configuration.setAllowedHeaders(Arrays.asList("*"));
+    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
   }
 }

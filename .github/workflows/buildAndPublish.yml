@@ -46,4 +46,4 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: docker.pkg.github.com/alejoramirezgismondi/user:latest
+          tags: docker.pkg.github.com/alejoramirezgismondi/jibber-jabber-user/user:latest

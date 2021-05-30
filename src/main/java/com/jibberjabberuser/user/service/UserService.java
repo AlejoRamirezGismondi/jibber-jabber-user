@@ -2,6 +2,7 @@ package com.jibberjabberuser.user.service;
 
 
 import com.jibberjabberuser.user.model.User;
+import com.jibberjabberuser.user.model.dto.ChangePasswordDTO;
 import com.jibberjabberuser.user.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,5 +42,13 @@ public class UserService {
     final Optional<User> optional = userRepository.findByEmail(email);
     if (optional.isPresent()) return optional.get();
     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+  }
+  
+  public boolean changPassword(User user, ChangePasswordDTO dto) {
+    final String oldPassword = user.getPassword();
+    if (!passwordEncoder.matches(dto.getOldPassword(), oldPassword)) return false;
+    user.setPassword(dto.getNewPassword());
+    save(user);
+    return true;
   }
 }

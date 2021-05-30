@@ -2,14 +2,17 @@ package com.jibberjabberuser.user.controller;
 
 import com.jibberjabberuser.user.factory.UserFactory;
 import com.jibberjabberuser.user.model.User;
+import com.jibberjabberuser.user.model.dto.ChangePasswordDTO;
 import com.jibberjabberuser.user.model.dto.LogInDTO;
 import com.jibberjabberuser.user.model.dto.UserDTO;
 import com.jibberjabberuser.user.security.JwtTokenProvider;
 import com.jibberjabberuser.user.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,6 +70,13 @@ public class UserController {
       return e.getMessage();
     }
     return tokenProvider.createToken(email, "normal");
+  }
+  
+  @PostMapping(path = "/changePassword")
+  public void changePassword(@RequestBody ChangePasswordDTO dto) {
+    final User user = getAuthenticatedUser();
+    final boolean success = service.changPassword(user, dto);
+    if (!success) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Current password is incorrect");
   }
   
   private UserDTO toDto(User user) {

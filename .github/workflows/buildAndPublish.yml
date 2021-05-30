@@ -24,7 +24,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: pwd && ls src/ && ./gradlew build
+      run: ./gradlew build
 
   push_to_registry:
     name: Push Docker image to GitHub Packages

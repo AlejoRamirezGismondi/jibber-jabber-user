@@ -35,9 +35,9 @@ jobs:
       contents: read
     steps:
       - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Log in to GitHub Docker Registry

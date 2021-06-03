@@ -60,11 +60,11 @@ jobs:
       - name: Set branch name variable
         uses: nelonoel/branch-name@v1
       - name: Set Production Env variables if prod is target
-        if: {{ env.BRANCH_NAME == 'prod' }}
+        if: ${{ env.BRANCH_NAME == 'prod' }}
         run: |
           echo "VM_IP=${PROD_IP}" >> $GITHUB_ENV && echo "VM_USER=${PROD_USER}" >> $GITHUB_ENV
       - name: Set Dev Env variables if dev is target
-        if: {{ env.BRANCH_NAME == 'dev' }}
+        if: ${{ env.BRANCH_NAME == 'dev' }}
         run: |
           echo "VM_IP=${DEV_IP}" >> $GITHUB_ENV && echo "VM_USER=${DEV_USER}" >> $GITHUB_ENV
       - name: Deploy

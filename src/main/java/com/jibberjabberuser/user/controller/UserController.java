@@ -43,6 +43,10 @@ public class UserController {
     return toDto(getAuthenticatedUser());
   }
   
+  @GetMapping("/id")
+  public Long getUserId() {
+    return getAuthenticatedUser().getId();
+  }
   
   @GetMapping(path = "/all")
   public List<UserDTO> getAllUsers() {

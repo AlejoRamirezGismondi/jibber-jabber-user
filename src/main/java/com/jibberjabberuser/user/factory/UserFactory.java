@@ -17,6 +17,7 @@ public class UserFactory {
     return new User(
             dto.getFirstName(),
             dto.getLastName(),
+            dto.getUserName(),
             dto.getEmail(),
             dto.getAge()
     );
@@ -26,6 +27,7 @@ public class UserFactory {
     return new UserDTO(
             user.getFirstName(),
             user.getLastName(),
+            user.getUserName(),
             user.getEmail(),
             user.getAge());
   }

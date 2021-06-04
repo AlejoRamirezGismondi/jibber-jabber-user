@@ -34,6 +34,10 @@ public class JwtTokenProvider {
     secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
   }
   
+  public String createToken(String username) {
+    return createToken(username, "normal");
+  }
+  
   public String createToken(String username, String role) {
     
     Claims claims = Jwts.claims().setSubject(username);
@@ -76,4 +80,8 @@ public class JwtTokenProvider {
     }
   }
   
+  public String renewToken(String token) {
+    final String username = getUsername(token);
+    return createToken(username);
+  }
 }

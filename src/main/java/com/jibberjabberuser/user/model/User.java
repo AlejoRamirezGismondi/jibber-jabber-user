@@ -11,15 +11,16 @@ import javax.persistence.*;
 public class User {
   @Id @GeneratedValue
   private Long id;
-  private String firstName, lastName;
+  private String firstName, lastName, userName;
   @NotNull private String password, email;
   private int age;
   
-  public User(String firstName, String lastName, String email, int age) {
+  public User(String firstName, String lastName, String userName, String email, int age) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.age = age;
+    this.userName = userName;
   }
   public User() {}
 }

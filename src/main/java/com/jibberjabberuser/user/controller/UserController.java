@@ -69,7 +69,7 @@ public class UserController {
     } catch (Exception e) {
       return e.getMessage();
     }
-    return tokenProvider.createToken(email, "normal");
+    return tokenProvider.createToken(email);
   }
   
   @PostMapping(path = "/changePassword")
@@ -77,6 +77,11 @@ public class UserController {
     final User user = getAuthenticatedUser();
     final boolean success = service.changPassword(user, dto);
     if (!success) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Current password is incorrect");
+  }
+  
+  @GetMapping(path = "/getUserByUserName")
+  public UserDTO getUserByUserName(@RequestBody String name) {
+    return toDto(service.getByUserName(name));
   }
   
   private UserDTO toDto(User user) {

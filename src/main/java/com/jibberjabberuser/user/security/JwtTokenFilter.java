@@ -33,7 +33,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       httpServletResponse.sendError(ex.getHttpStatus().value(), ex.getMessage());
       return;
     }
-    
+    if (token != null) {
+      String newToken = jwtTokenProvider.renewToken(token);
+      httpServletResponse.addHeader("Authentication", newToken);
+    }
     filterChain.doFilter(httpServletRequest, httpServletResponse);
   }
   

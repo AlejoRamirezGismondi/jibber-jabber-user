@@ -51,4 +51,11 @@ public class UserService {
     save(user);
     return true;
   }
+  
+  public User getByUserName(String userName) {
+    final Optional<User> optional = userRepository.findByUserName(userName);
+    if (optional.isPresent()) return optional.get();
+    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+  }
 }
+//todo estara mal que esten los errors aca en el service?

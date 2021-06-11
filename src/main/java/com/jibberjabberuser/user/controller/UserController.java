@@ -53,6 +53,11 @@ public class UserController {
     return service.getAll().stream().map(this::toDto).collect(Collectors.toList());
   }
   
+  @GetMapping(path = "/following")
+  public List<Long> getFollowing() {
+    return service.getFollowing(getUserId());
+  }
+  
   @PostMapping()
   public void createUser(@RequestBody User user) {
     service.save(user);
@@ -86,6 +91,27 @@ public class UserController {
   @GetMapping(path = "/getUserByUserName")
   public UserDTO getUserByUserName(@RequestBody String name) {
     return toDto(service.getByUserName(name));
+  }
+  
+  
+  @PostMapping(path = "/like/{postId}")
+  public void like(@PathVariable Long postId) {
+    service.like(getUserId(), postId);
+  }
+  
+  @PostMapping(path = "/unlike/{postId}")
+  public void ubLike(@PathVariable Long postId) {
+    service.unLike(getUserId(), postId);
+  }
+  //todo cambiar user id al @
+  @PostMapping(path = "/follow/{userId}")
+  public void follow(@PathVariable Long userId) {
+    service.follow(getUserId(), userId);
+  }
+  
+  @PostMapping(path = "/unfollow/{userId}")
+  public void unFollow(@PathVariable Long userId) {
+    service.unFollow(getUserId(), userId);
   }
   
   private UserDTO toDto(User user) {

@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -56,6 +57,39 @@ public class UserService {
     final Optional<User> optional = userRepository.findByUserName(userName);
     if (optional.isPresent()) return optional.get();
     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+  }
+  
+  public void like(Long userId, Long postId) {
+    final User user = get(userId);
+    user.addLike(postId);
+    userRepository.save(user);
+  }
+  
+  public void unLike(Long userId, Long postId) {
+    final User user = get(userId);
+    user.removeLike(postId);
+    userRepository.save(user);
+  }
+  
+  public void follow(Long id, Long followId) {
+    if (id.equals(followId)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User can't follow itself");
+    final User user = get(id);
+    final User follow = get(followId);
+    user.follow(follow);
+    userRepository.save(user);
+  }
+  
+  public void unFollow(Long id, Long followId) {
+    if (id.equals(followId)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User can't unfollow itself");
+    final User user = get(id);
+    final User follow = get(followId);
+    user.unfollow(follow);
+    userRepository.save(user);
+  }
+  
+  public List<Long> getFollowing(Long userId) {
+    return get(userId).getFollowing().stream()
+            .map(User::getId).collect(Collectors.toList());
   }
 }
 //todo estara mal que esten los errors aca en el service?

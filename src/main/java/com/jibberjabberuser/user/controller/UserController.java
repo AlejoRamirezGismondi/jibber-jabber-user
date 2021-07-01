@@ -90,7 +90,7 @@ public class UserController {
   
   @PostMapping(path = "/getUserByUserName")
   public UserDTO getUserByUserName(@RequestBody String name) {
-    return toDto(service.getByUserName(name));
+    return toDto(service.getByFirstName(name));
   }
   
   

@@ -25,6 +25,7 @@ public class UserFactory {
   
   public UserDTO userToDto(User user) {
     return new UserDTO(
+            user.getId(),
             user.getFirstName(),
             user.getLastName(),
             user.getUserName(),

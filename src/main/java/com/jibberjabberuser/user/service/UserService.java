@@ -53,8 +53,8 @@ public class UserService {
     return true;
   }
   
-  public User getByUserName(String userName) {
-    final Optional<User> optional = userRepository.findByUserName(userName);
+  public User getByFirstName(String userName) {
+    final Optional<User> optional = userRepository.findByFirstName(userName);
     if (optional.isPresent()) return optional.get();
     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
   }

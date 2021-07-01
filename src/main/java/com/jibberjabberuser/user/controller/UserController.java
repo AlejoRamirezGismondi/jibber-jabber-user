@@ -88,7 +88,7 @@ public class UserController {
     if (!success) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Current password is incorrect");
   }
   
-  @GetMapping(path = "/getUserByUserName")
+  @PostMapping(path = "/getUserByUserName")
   public UserDTO getUserByUserName(@RequestBody String name) {
     return toDto(service.getByUserName(name));
   }

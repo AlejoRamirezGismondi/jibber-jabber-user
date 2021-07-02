@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,7 +36,13 @@ public class UserController {
   
   @GetMapping(path = "/{id}")
   public UserDTO getUser(@PathVariable Long id) {
-    return toDto(service.get(id));
+    final UserDTO user = toDto(service.get(id));
+    final Optional<User> optional = getAuthenticatedUser().getFollowing()
+            .stream().filter(
+                    u -> u.getId().equals(user.getId())
+            ).findFirst();
+    user.setFollowing(optional.isPresent());
+    return user;
   }
   
   @GetMapping()
@@ -47,7 +54,7 @@ public class UserController {
   public Long getUserId() {
     return getAuthenticatedUser().getId();
   }
-
+  
   @GetMapping("/firstName")
   public String getUserFirstName() {
     return getAuthenticatedUser().getFirstName();
@@ -108,7 +115,7 @@ public class UserController {
   public void ubLike(@PathVariable Long postId) {
     service.unLike(getUserId(), postId);
   }
-  //todo cambiar user id al @
+  
   @PostMapping(path = "/follow/{userId}")
   public void follow(@PathVariable Long userId) {
     service.follow(getUserId(), userId);

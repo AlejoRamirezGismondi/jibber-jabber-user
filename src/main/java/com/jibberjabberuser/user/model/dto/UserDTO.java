@@ -6,9 +6,11 @@ import lombok.Data;
 public class UserDTO {
   private String firstName, lastName, userName, email;
   private int age;
+  private Long id;
   
   public UserDTO() {}
-  public UserDTO(String firstName, String lastName, String userName, String email, int age) {
+  public UserDTO(Long id, String firstName, String lastName, String userName, String email, int age) {
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;

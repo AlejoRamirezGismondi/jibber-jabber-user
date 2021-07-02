@@ -47,6 +47,11 @@ public class UserController {
   public Long getUserId() {
     return getAuthenticatedUser().getId();
   }
+
+  @GetMapping("/firstName")
+  public String getUserFirstName() {
+    return getAuthenticatedUser().getFirstName();
+  }
   
   @GetMapping(path = "/all")
   public List<UserDTO> getAllUsers() {
@@ -90,7 +95,7 @@ public class UserController {
   
   @PostMapping(path = "/getUserByUserName")
   public UserDTO getUserByUserName(@RequestBody String name) {
-    return toDto(service.getByUserName(name));
+    return toDto(service.getByFirstName(name));
   }
   
   

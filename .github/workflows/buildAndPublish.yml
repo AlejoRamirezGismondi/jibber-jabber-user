@@ -5,7 +5,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ prod, dev ]
+    branches: [ dev, prod ]
 
 jobs:
   build:
@@ -80,4 +80,3 @@ jobs:
           host: ${{ env.VM_IP }}
           user: ${{ env.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          

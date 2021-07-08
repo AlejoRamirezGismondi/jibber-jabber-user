@@ -79,7 +79,7 @@ public class UserController {
   public UserDTO editUser(@RequestBody UserDTO user) {
     final User oldUser = getAuthenticatedUser();
     factory.update(oldUser, user);
-    return toDto(service.save(oldUser));
+    return toDto(service.update(oldUser));
   }
   
   @PostMapping(path = "/login")
